@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn import datasets
@@ -26,10 +25,9 @@ for i in range(len(data.target_names)):
         y = bucket.loc[i+bucket.first_valid_index()][1]
         arrXY.append([x,y])
     arrXY.sort()
+
     hull = []
     ConvexHull(arrXY, [], [], 0, hull, False)
-    hull = sort_cw(hull)
-    hull.append(hull[0])
 
     arrX, arrY = zip(*arrXY)
     plt.scatter(arrX, arrY)

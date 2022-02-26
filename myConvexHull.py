@@ -30,6 +30,8 @@ def ConvexHull(arrXY, left=[], right=[], i=0, result = [], up=False):
         RightDownPoints = FindRightDown(arrXY, left, right)
         ConvexHull(LeftUpPoints, left, right, 1, result, True)
         ConvexHull(RightDownPoints, left, right, 1, result, False)
+        sort_cw(result)
+        result.append(result[0])
 
     elif (arrXY != [] and i != 0 ):
         dist = []
@@ -104,31 +106,7 @@ def sort_cw(points):
 
     for i in idx:
         cw_points.append(points[i])
-    return cw_points
-
-
-# data = datasets.load_iris()
-# #create a DataFrame
-# df = pd.DataFrame(data.data, columns=data.feature_names)
-# df['Target'] = pd.DataFrame(data.target)
-# #split df
-# df1 = df[df["Target"]==2]
-# arrXY = []
-# arrX = []
-# arrY = []
-# length = len(df1)
-# for i in range(length):
-#     arrX.append(df1.loc[i+df1.first_valid_index()][0])
-#     arrY.append(df1.loc[i+df1.first_valid_index()][1])
-#     arrXY.append([arrX[i],arrY[i]])
-
-# plt.scatter(arrX, arrY, s=15)
-# arrXY.sort()
-# result = []
-# ConvexHull(arrXY, [], [], 0, result, False)
-# result = sort_cw(result)
-# result.append(result[0])
-# print(f"Hull Points = {result}")
-# arrX, arrY = zip(*result)
-# plt.plot(arrX, arrY)
-# plt.show()
+    
+    points.clear()
+    for i in range(len(cw_points)):
+        points.append(cw_points[i])

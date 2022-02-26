@@ -4,9 +4,8 @@ from sklearn import datasets
 import matplotlib.pyplot as plt
 from myConvexHull import *
 
-
-data = datasets.load_iris()
 #create a DataFrame
+data = datasets.load_iris()
 df = pd.DataFrame(data.data, columns=data.feature_names)
 df['Target'] = pd.DataFrame(data.target)
 df.head()
@@ -20,17 +19,16 @@ for i in range(len(data.target_names)):
     bucket = df[df['Target'] == i]
     length = len(bucket)
     arrXY = []
-    for i in range(length):
-        x = bucket.loc[i+bucket.first_valid_index()][0]
-        y = bucket.loc[i+bucket.first_valid_index()][1]
+    for j in range(length):
+        x = bucket.loc[j+bucket.first_valid_index()][0]
+        y = bucket.loc[j+bucket.first_valid_index()][1]
         arrXY.append([x,y])
-    arrXY.sort()
 
     hull = []
-    ConvexHull(arrXY, [], [], 0, hull, False)
+    ConvexHull(arrXY, result = hull)
 
     arrX, arrY = zip(*arrXY)
-    plt.scatter(arrX, arrY)
+    plt.scatter(arrX, arrY, label = data.target_names[i])
     
     hullX, hullY = zip(*hull)
     plt.plot(hullX, hullY)

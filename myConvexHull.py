@@ -3,25 +3,9 @@ import matplotlib.pyplot as plt
 from sklearn import datasets
 from math import sqrt, atan2
 
-def PointDeterminant(p1, p2, p3):
-    return p1[0]*p2[1] + p3[0]*p1[1] + p2[0]*p3[1] - p3[0]*p2[1] - p2[0]*p1[1] - p1[0]*p3[1]
-
-def FindLeftUp(arrXY, Pleft, Pright):
-    arr = []
-    for i in range(len(arrXY)):
-        if (PointDeterminant(Pleft, Pright, arrXY[i]) > 0  and arrXY[i] != Pleft and arrXY[i] != Pright):
-            arr.append(arrXY[i])
-    return arr
-
-def FindRightDown(arrXY, Pleft, Pright):
-    arr = []
-    for i in range(len(arrXY)):
-        if (PointDeterminant(Pleft, Pright, arrXY[i]) <= 0 and arrXY[i] != Pleft and arrXY[i] != Pright):
-            arr.append(arrXY[i])
-    return arr
-
 def ConvexHull(arrXY, left=[], right=[], i=0, result = [], up=False):
-    if (arrXY != [] and i==0 ):
+    if (arrXY != [] and i==0):
+        arrXY.sort()
         left = arrXY[0]
         right = arrXY[-1]
         result.append(left)
@@ -62,6 +46,7 @@ def ConvexHull(arrXY, left=[], right=[], i=0, result = [], up=False):
                 y = point[1]
                 distance = abs(y-left[1])
                 dist.append(distance)
+
         dist_max = max(dist)
         idx_max = dist.index(dist_max)
         if (arrXY[idx_max] not in result):
@@ -69,18 +54,35 @@ def ConvexHull(arrXY, left=[], right=[], i=0, result = [], up=False):
 
         if (up):
             LeftUpPoints = FindLeftUp(arrXY, left, arrXY[idx_max])
-            RightDownPoints = FindLeftUp(arrXY, arrXY[idx_max], right)
+            RightUpPoints = FindLeftUp(arrXY, arrXY[idx_max], right)
             if (len(LeftUpPoints) != 0):
                 ConvexHull(LeftUpPoints, left, arrXY[idx_max], 1, result, up)
+            if (len(RightUpPoints) != 0):
+                ConvexHull(RightUpPoints, arrXY[idx_max], right, 1, result, up)
+        else:
+            LeftDownPoints = FindRightDown(arrXY, left, arrXY[idx_max])
+            RightDownPoints = FindRightDown(arrXY, arrXY[idx_max], right)
+            if (len(LeftDownPoints) != 0):
+                ConvexHull(LeftDownPoints, left, arrXY[idx_max], 1, result, up)
             if (len(RightDownPoints) != 0):
                 ConvexHull(RightDownPoints, arrXY[idx_max], right, 1, result, up)
-        else:
-            LeftUpPoints = FindRightDown(arrXY, left, arrXY[idx_max])
-            RightDownPoints = FindRightDown(arrXY, arrXY[idx_max], right)
-            if (len(LeftUpPoints) != 0):
-                ConvexHull(LeftUpPoints, left, arrXY[idx_max], 1, result, up)
-            if (len(RightDownPoints) != 0):
-                ConvexHull(RightDownPoints, arrXY[idx_max], right, 1, result, up)\
+
+def PointDeterminant(p1, p2, p3):
+    return p1[0]*p2[1] + p3[0]*p1[1] + p2[0]*p3[1] - p3[0]*p2[1] - p2[0]*p1[1] - p1[0]*p3[1]
+
+def FindLeftUp(arrXY, Pleft, Pright):
+    arr = []
+    for i in range(len(arrXY)):
+        if (PointDeterminant(Pleft, Pright, arrXY[i]) > 0  and arrXY[i] != Pleft and arrXY[i] != Pright):
+            arr.append(arrXY[i])
+    return arr
+
+def FindRightDown(arrXY, Pleft, Pright):
+    arr = []
+    for i in range(len(arrXY)):
+        if (PointDeterminant(Pleft, Pright, arrXY[i]) <= 0 and arrXY[i] != Pleft and arrXY[i] != Pright):
+            arr.append(arrXY[i])
+    return arr
 
 def sort_cw(points):
     #sort points clockwise

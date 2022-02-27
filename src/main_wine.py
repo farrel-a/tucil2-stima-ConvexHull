@@ -1,7 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn import datasets
-import matplotlib.pyplot as plt
 from myConvexHull import *
 
 """ Linnerud DataFrame """
@@ -39,6 +38,6 @@ for i in range(len(data.target_names)):
     # Convex Hull Plot
     hullX, hullY = zip(*hull)
     plt.plot(hullX, hullY)
-    
+
 plt.legend()
 plt.show()

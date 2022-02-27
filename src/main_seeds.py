@@ -1,7 +1,5 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn import datasets
-import matplotlib.pyplot as plt
 from myConvexHull import *
 
 """ Wheat Seeds DataFrame """
@@ -42,6 +40,6 @@ for i in range(1, len(target_names) + 1):
     # Convex Hull Plot
     hullX, hullY = zip(*hull)
     plt.plot(hullX, hullY)
-    
+
 plt.legend()
 plt.show()

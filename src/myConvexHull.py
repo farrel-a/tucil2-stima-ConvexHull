@@ -1,3 +1,4 @@
+#13520110 - Farrel Ahmad
 from math import sqrt, atan2
 
 def ConvexHull(arrXY, left=[], right=[], i=0, result = [], up=False):

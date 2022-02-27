@@ -10,9 +10,9 @@ df['Target'] = pd.DataFrame(data.target)
 
 """ Iris DataFrame Convex Hull Visualization """
 plt.figure(figsize = (10, 6))
-plt.title('Sepal Width vs Sepal Length')
-plt.xlabel(data.feature_names[0])
-plt.ylabel(data.feature_names[1])
+plt.title('Petal Length vs Petal Width')
+plt.xlabel(data.feature_names[2])
+plt.ylabel(data.feature_names[3])
 for i in range(len(data.target_names)):
     # Find points (x,y) for each target
     bucket = df[df['Target'] == i]
@@ -20,8 +20,8 @@ for i in range(len(data.target_names)):
     arrXY = []
     for j in range(length):
         try:
-            x = bucket.loc[j+bucket.first_valid_index()][0]
-            y = bucket.loc[j+bucket.first_valid_index()][1]
+            x = bucket.loc[j+bucket.first_valid_index()][2]
+            y = bucket.loc[j+bucket.first_valid_index()][3]
         except KeyError:
             continue
         else:

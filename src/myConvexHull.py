@@ -1,6 +1,3 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-from sklearn import datasets
 from math import sqrt, atan2
 
 def ConvexHull(arrXY, left=[], right=[], i=0, result = [], up=False):
